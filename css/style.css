@@ -1,0 +1,450 @@
+body{
+    font-family: Lato;
+    margin: 0;
+    color: #353535;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+hr {
+    border-top: 1px solid #d2d2d2;
+    margin: 2rem 0;
+}
+
+hr:first-of-type {
+    margin-bottom: 2rem;
+}
+
+hr:nth-of-type(2) {
+    margin: 2rem 0 4rem;
+}
+
+p {
+    margin: 2rem 0;
+}
+
+.legend p {
+    font-size: 16px;
+}
+
+ a {
+    color: #1696d2;
+    text-decoration: none;
+ }
+
+.container {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+}
+
+.trend_description {
+    margin-bottom: 2rem;
+}
+
+.what_charts_show_title {
+    font-size: 18px;
+    margin: 2rem 0 1rem;
+    font-weight: bold;
+    font-style: italic;
+}
+
+div.legend p {
+    margin: 1rem 0 2rem;
+    font-style: italic;
+}
+
+#chart_container {
+    clear: both;
+}
+
+.chart {
+    display: inline-block;
+    float: left;
+    margin-right: 40px;
+    margin-bottom: 40px;
+}
+
+.chart:nth-of-type(2n) {
+    margin-right: 0;
+}
+
+.chart_smallMultiples {
+    overflow-y: auto;
+    clear: both;
+    margin-top: 2rem;
+}
+
+.chart_title {
+    /*font-size: 18px;*/
+    line-height: 32px;
+    margin: 2.4rem 0 0.5rem;
+}
+
+h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+/****************** SELECTOR STYLES ******************/
+.geo_selector {
+    overflow-y: auto;
+}
+
+.geo.selector_title {
+    display: inline-block;
+    float: left;
+    /*font-size: 18px;*/
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-right: 30px;
+}
+
+ul {
+    display: inline-block;
+    float: left;
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.geo.option {
+    /*font-size: 18px;*/
+    display: inline-block;
+    float: left;
+    margin-right: 65px;
+}
+
+.geo.option:last-of-type {
+    margin-right: 0;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.dropdown_container {
+    margin-top: 12px;
+}
+
+/*** styles for radio buttons ***/
+/* source: https://codepen.io/manabox/pen/raQmpL */
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #12719E;
+    font-weight: bold;
+}
+
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #353535;
+}
+[type="radio"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #12719E;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #353535;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #12719E;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+}
+
+
+/*** styles for dropdown ***/
+#metrics-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;   /* remove default arrow */
+    width: 330px;
+    height: 50px;
+    /*background: #ffffff;*/
+    border: 1px solid #d2d2d2;
+    border-radius: 0;
+    font-family: Lato;
+    cursor: pointer;
+    background: url("../img/arrow-blue.png") 96% / 15% no-repeat #ffffff;
+    background-size: auto;
+    margin: 0 6px;
+}
+
+#states-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;   /* remove default arrow */
+    width: 250px;
+    height: 50px;
+    /*background: #ffffff;*/
+    border: 1px solid #d2d2d2;
+    border-radius: 0;
+    font-family: Lato;
+    cursor: pointer;
+    background: url("../img/arrow-blue.png") 96% / 15% no-repeat #ffffff;
+    background-size: auto;
+}
+
+#msas-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;   /* remove default arrow */
+    width: 250px;
+    height: 50px;
+    /*background: #ffffff;*/
+    border: 1px solid #d2d2d2;
+    border-radius: 0;
+    font-family: Lato;
+    cursor: pointer;
+    background: url("../img/arrow-blue.png") 96% / 15% no-repeat #ffffff;
+    background-size: auto;
+}
+
+/*select::-ms-expand {
+    display: none;
+}
+*/
+/* https://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box */
+/*
+select:focus::-ms-value {
+    color: #1696d2;
+    background: none;
+}
+option {
+    background: #ffffff;
+}*/
+
+/* https://stackoverflow.com/questions/13694271/modify-select-so-only-the-first-one-is-gray
+select:invalid,
+select option[value=""] {
+    color: #353535;
+}*/
+
+.ui-selectmenu-menu .ui-menu {
+    max-height: 300px;
+}
+
+.ui-selectmenu-text {
+    font-size: 18px;
+    color: #12719E;
+    width: 90%;
+    left: 11px;
+    top: 4px;
+    font-weight: bold;
+}
+
+#states-button .ui-selectmenu-text,
+#msas-button .ui-selectmenu-text {
+    font-size: 16px;
+    top: 7px;
+}
+
+@media screen and (max-width: 680px) {
+    .geo.selector_title,
+    ul {
+        display: block;
+        float: none;
+    }
+
+    .geo.option {
+        display: block;
+        float: none;
+        margin-bottom: 3%;
+        margin-right: 0;
+    }
+
+    #states-button {
+        width: 270px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    #metrics-button {
+        width: 95%;
+        margin: 0;
+    }
+}
+/*****************************************************/
+
+
+
+
+/****************** CHART STYLES *********************/
+.race.dot{
+    fill: #1696d2;
+}
+
+.statelocal.dot{
+    fill: #696969;
+}
+
+.national.dot {
+    fill: #408941;
+}
+
+.race.moe{
+    fill: #73bfe2;
+}
+
+.statelocal.moe{
+    fill: #d2d2d2;
+    mix-blend-mode: multiply;
+}
+
+.national.moe {
+    fill: #55b748;
+    mix-blend-mode: multiply;
+}
+
+.insig{
+    opacity: .25;
+}
+
+.y-axis path.domain {
+    stroke: none;
+}
+
+.y-axis .tick line {
+    stroke: #d2d2d2;
+}
+
+text {
+    font-family: Lato;
+}
+
+.tick text {
+    font-size: 12px;
+}
+
+.btn{
+    display: inline-block;
+    padding: 10px;
+    background: #d2d2d2;
+    color: #000;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.btn.active{
+    background: #1696d2;
+    color: #fff;
+}
+
+@media screen and (max-width: 700px) {
+    .tick text {
+        font-size: 9px;
+    }
+}
+
+
+/**************** LEGEND STYLES **********************/
+/*div.legend {
+    margin: 2rem 0;
+}
+*/
+svg.legend:first-of-type {
+    margin-right: 10%;
+}
+
+svg.legend text {
+    font-size: 16px;
+    /*font-weight: bold;*/
+    font-style: italic;
+}
+
+.chart_legend {
+    margin: 0.5rem 0;
+    overflow-y: auto;
+}
+
+.legendEntry {
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.chart_legend.legend text {
+    font-style: normal;
+}
+
+.legendDot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.legendDot.national {
+    background-color: #55b748;
+}
+
+.legendDot.statelocal {
+    background-color: #696969;
+}
+
+.legendDot.race {
+    background-color: #1696d2;
+}
+
+@media screen and (max-width: 781px) {
+    svg.legend:first-of-type {
+        margin-bottom: 10%;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    svg.legend text {
+        font-size: 14px;
+    }
+}
+/*****************************************************/

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="navList">
+<head>
+
+    <title>Census PULSE feature</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic,900" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Census Pulse Feature: the sequel</h1>
+        <hr style="border:5px solid #1696d2;width:138px;">
+
+        <div id="charts"></div>
+
+        <p>footer</p>
+    </div>
+
+    <script src="js/vendor/pym.v1.min.js"></script>
+    <script src="js/vendor/jquery-1.9.1.min.js"></script>
+
+    <script>
+        var pymParent = new pym.Parent("charts", "charts.html", {});
+    </script>
+
+
+</body>
+</html>
