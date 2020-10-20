@@ -21,7 +21,8 @@ var y = d3.scaleLinear()
 var PCTFORMAT = d3.format(".0%");
 var num_ticks = 10;
 
-var initial_indicator = "food_insufficient";
+var selected_indicator = "food_insufficient";
+var selected_geo = "US";
 
 // dummy data so that elements are entered on the National graph on load
 // as placeholders for the state/MSA-specific points
@@ -142,23 +143,23 @@ function setupChart(race) {
     var data;
 
     if(race === "national") {
-        data = pulseData.filter(function(d) { return (d.geography === "US") &&
+        data = pulseData.filter(function(d) { return (d.geography === selected_geo) &&
                                                         d.race_var === "total" &&
-                                                        d.metric === initial_indicator; })
+                                                        d.metric === selected_indicator; })
                         .concat(dummy_state_data);
     }
     else {
-        data = pulseData.filter(function(d) { return d.geography === "US" &&
+        data = pulseData.filter(function(d) { return d.geography === selected_geo &&
                                                         (d.race_var === race || d.race_var === "total") &&
-                                                        d.metric === initial_indicator; });
+                                                        d.metric === selected_indicator; });
     }
     // console.log(data);
 
     // insert chart title
-    d3.select(".chart_title").text(chartTitles[initial_indicator]);
+    d3.select(".chart_title").text(chartTitles[selected_indicator]);
 
     // insert trend description
-    d3.select(".trend_description").html(trendDescriptions[initial_indicator]);
+    d3.select(".trend_description").html(trendDescriptions[selected_indicator]);
 
     var svg = d3.select(".chart." + race + " svg")
         .attr("width", width + margin.left + margin.right)
@@ -252,6 +253,7 @@ function setupChart(race) {
 
 function update() {
     var metric = getMetric();
+    selected_indicator = metric;
 
     // need to figure out which geography level is active
     var geo_level = getGeographyLevel();
@@ -259,6 +261,7 @@ function update() {
     if(geo_level === "national") geo = "US";
     else if(geo_level === "state") geo = getGeography("state");
     else if(geo_level === "msa") geo = getGeography("msa");
+    selected_geo = geo;
 
     updateChart("national", metric, geo);
     updateChart("asian", metric, geo);
@@ -286,7 +289,6 @@ function updateChart(race, metric, geo) {
                                                         (d.race_var === race || d.race_var === "total") &&
                                                         d.metric === metric; });
     }
-// console.log(data);
 
     // update chart title
     d3.select(".chart_title").text(chartTitles[metric]);
