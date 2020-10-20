@@ -219,7 +219,16 @@ function setupChart(race) {
         .classed("insig", function(d) {
             if(d.geography === "dummy data") return false;
             else if(d.race_var !== "total") return (d.sigdiff === 0);
-            else if(race === "national") return (d.sigdiff === 0);
+            else if(race === "national") {
+                if(selected_geo !== "US") {
+                    // if selected geo isn't US, on national plot, need to figure out if US average is
+                    // statistically significant different
+                    // or not based on whether the corresponding state or local datum for that week is
+                    var corresponding_race_data = data.filter(function(x) { return (x.date_int === d.date_int) && (x.geography !== "US"); });
+                    return corresponding_race_data[0].sigdiff === 0;
+                }
+                else return (d.sigdiff === 0);
+            }
             else {
                 // need to figure out if the overall average bar is statistically significantly different or not
                 // based on whether the corresponding race-specific datum for that week is
