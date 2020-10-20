@@ -142,11 +142,16 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
 function setupChart(race) {
     var data;
 
-    if(race === "national") {
+    if(race === "national" && selected_geo === "US") {
         data = pulseData.filter(function(d) { return (d.geography === selected_geo) &&
                                                         d.race_var === "total" &&
                                                         d.metric === selected_indicator; })
                         .concat(dummy_state_data);
+    }
+    else if(race === "national" && selected_geo !== "US") {
+        data = pulseData.filter(function(d) { return (d.geography === selected_geo || d.geography === "US") &&
+                                                        d.race_var === "total" &&
+                                                        d.metric === selected_indicator; });
     }
     else {
         data = pulseData.filter(function(d) { return d.geography === selected_geo &&
