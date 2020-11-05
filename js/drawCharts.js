@@ -104,7 +104,7 @@ function drawGraphic(containerWidth) {
     }
 }
 
-// data can be found here: https://ui-census-pulse-survey.s3.amazonaws.com/rolling_all_to_current_week.csv
+// data can be found here: https://ui-census-pulse-survey.s3.amazonaws.com/phase2_all_to_current_week.csv
 // NOTE: if the en dashes in the date ranges aren't showing up properly,
 //       open the csv file in Sublime and go to File > Save with Encoding > UTF-8
 d3.csv("data/phase2_all_to_current_week.csv", function(d) {
