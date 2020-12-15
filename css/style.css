@@ -384,6 +384,19 @@ text {
     }
 }
 
+.phase_end_line line {
+    stroke: #696969;
+}
+
+.phase_end_line text {
+    fill: #696969;
+    font-size: 12px;
+}
+
+.phase_end {
+    text-anchor: end;
+}
+
 
 /**************** LEGEND STYLES **********************/
 /*div.legend {

@@ -2,7 +2,7 @@ var pymChild = null;
 var pulseData;
 
 var margin = {
-    top: 10,
+    top: 20,
     right: 10,
     bottom: 50,
     left: 33
@@ -186,8 +186,8 @@ function setupChart(race) {
         .call(d3.axisBottom(x).tickSizeOuter(0));
 
     // if(width < 550) {
-    //     d3.selectAll(".x-axis .tick text")
-    //     .call(wrap, x.bandwidth());
+        d3.selectAll(".x-axis .tick text")
+        .call(wrap, x.bandwidth());
     // }
 
     // draw margin of error bands
@@ -272,6 +272,34 @@ function setupChart(race) {
                 return corresponding_race_data[0].sigdiff === 0;
             }
         });
+
+    // add line demarcating where Phase 2 ends and Phase 3 begins
+    var padding_inner_amount = x("10/28–11/9") - (x("10/14–26") + x.bandwidth());
+    var phase2_end_pos = x("10/14–26") + x.bandwidth() + (padding_inner_amount / 2);
+
+    var phase2_end_line = g.append("g")
+        .attr("class", "phase_end_line");
+
+    phase2_end_line.append("line")
+        .attr("x1", phase2_end_pos)
+        .attr("x2", phase2_end_pos)
+        .attr("y1", -margin.top)
+        .attr("y2", height)
+        .style("stroke-dasharray", "3 2");
+
+    phase2_end_line.append("text")
+        .attr("class", "phase_begin")
+        .attr("x", phase2_end_pos + 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 3 begins");
+
+    phase2_end_line.append("text")
+        .attr("class", "phase_end")
+        .attr("x", phase2_end_pos - 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 2 ends");
 }
 
 function update() {
