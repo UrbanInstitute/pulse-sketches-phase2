@@ -77,8 +77,9 @@ function drawGraphic(containerWidth) {
         margin.bottom = 50;
     }
 
-    width = (containerWidth < 450) ? containerWidth - margin.left - margin.right : 450 - margin.left - margin.right;
-    height = (width * 0.66) - margin.top - margin.bottom;
+    // width = (containerWidth < 450) ? containerWidth - margin.left - margin.right : 450 - margin.left - margin.right;
+    width = containerWidth - margin.left - margin.right;
+    height = (containerWidth < 450) ? (width * 0.66) - margin.top - margin.bottom : 230;
     num_ticks = (containerWidth < 400) ? 5 : 10;
 
     x.rangeRound([0, width]);
@@ -185,10 +186,10 @@ function setupChart(race) {
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSizeOuter(0));
 
-    // if(width < 550) {
+    if(width < 550) {
         d3.selectAll(".x-axis .tick text")
         .call(wrap, x.bandwidth());
-    // }
+    }
 
     // draw margin of error bands
     g.selectAll(".moe")
