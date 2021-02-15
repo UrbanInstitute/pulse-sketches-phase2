@@ -186,10 +186,10 @@ function setupChart(race) {
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSizeOuter(0));
 
-    if(width < 550) {
+    // if(width < 550) {
         d3.selectAll(".x-axis .tick text")
         .call(wrap, x.bandwidth());
-    }
+    // }
 
     // draw margin of error bands
     g.selectAll(".moe")
@@ -275,8 +275,8 @@ function setupChart(race) {
         });
 
     // add line demarcating where Phase 2 ends and Phase 3 begins
-    var padding_inner_amount = x("10/28–11/9") - (x("10/14–26") + x.bandwidth());
-    var phase2_end_pos = x("10/14–26") + x.bandwidth() + (padding_inner_amount / 2);
+    var padding_inner_amount = x("10/28/20–11/9/20") - (x("10/14/20–10/26/20") + x.bandwidth());
+    var phase2_end_pos = x("10/14/20–10/26/20") + x.bandwidth() + (padding_inner_amount / 2);
 
     var phase2_end_line = g.append("g")
         .attr("class", "phase_end_line");
