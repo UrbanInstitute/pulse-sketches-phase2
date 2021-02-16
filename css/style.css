@@ -307,10 +307,10 @@ select option[value=""] {
     }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 465px) {
     #metrics-button {
         width: 95%;
-        margin: 0;
+        margin: 12px 5% 12px 0;
     }
 }
 /*****************************************************/
