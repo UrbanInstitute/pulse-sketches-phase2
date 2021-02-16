@@ -4,7 +4,7 @@ var pulseData;
 var margin = {
     top: 20,
     right: 10,
-    bottom: 50,
+    bottom: 60,
     left: 33
 };
 
@@ -186,10 +186,17 @@ function setupChart(race) {
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSizeOuter(0));
 
-    // if(width < 550) {
-        d3.selectAll(".x-axis .tick text")
+    d3.selectAll(".x-axis .tick text")
         .call(wrap, x.bandwidth());
-    // }
+
+    // rotate x-axis tick labels on small screens so they don't overlap
+    if(width < 520) {
+        d3.selectAll(".x-axis .tick text")
+            .attr("y", 12)
+            .attr("dy", "0.3em")
+            .attr("transform", "rotate(45)")
+            .style("text-anchor", "start");
+    }
 
     // draw margin of error bands
     g.selectAll(".moe")
