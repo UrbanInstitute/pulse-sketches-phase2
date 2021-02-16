@@ -416,6 +416,7 @@ svg.legend text {
 .chart_legend {
     margin: 0.5rem 0;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .legendEntry {
@@ -449,13 +450,19 @@ svg.legend text {
     background-color: #1696d2;
 }
 
+@media screen and (max-width: 904px) {
+    svg.legend:first-of-type {
+        margin-right: 0;
+    }
+}
+
 @media screen and (max-width: 781px) {
     svg.legend:first-of-type {
         margin-bottom: 10%;
     }
 }
 
-@media screen and (max-width: 374px) {
+@media screen and (max-width: 450px) {
     svg.legend text {
         font-size: 14px;
     }
