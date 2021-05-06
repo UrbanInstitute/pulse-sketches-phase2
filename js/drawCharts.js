@@ -108,7 +108,7 @@ function drawGraphic(containerWidth) {
 // data can be found here: https://ui-census-pulse-survey.s3.amazonaws.com/phase2_all_to_current_week.csv
 // NOTE: if the en dashes in the date ranges aren't showing up properly,
 //       open the csv file in Sublime and go to File > Save with Encoding > UTF-8
-d3.csv("data/phase2_all_to_current_week.csv", function(d) {
+d3.csv("data/dummy.csv", function(d) {
     return {
         metric: d.metric,
         race_var: d.race_var,
@@ -184,7 +184,13 @@ function setupChart(race) {
     g.append("g")
         .attr("class", "axis x-axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+        .call(d3.axisBottom(x).tickSizeOuter(0))
+
+        g.select(".x-axis")
+            .selectAll(".tick")
+            .attr("class", function(d,i){
+                return "tick t" + (i%3)
+            });
 
     d3.selectAll(".x-axis .tick text")
         .call(wrap, x.bandwidth());
