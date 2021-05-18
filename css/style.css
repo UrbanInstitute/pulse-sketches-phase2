@@ -365,8 +365,17 @@ text {
     font-size: 12px;
 }
 
+.tick.t0 line {
+  stroke: #000000;
+  stroke-width: 2px;
+}
+
+.tick.t1 line, .tick.t2 line {
+  stroke: #9D9D9D;
+}
+
 .tick.t1 text, .tick.t2 text{
-    display: none;
+    /*display: none;*/
 }
 
 .btn{

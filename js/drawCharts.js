@@ -9,17 +9,20 @@ var margin = {
 };
 
 var width,
-    height;
+    height,
+    myBandwidth, //bc if you don't use scaleBand you need to make bands
+    numWeeks;
 
-var x = d3.scaleBand()
-    .paddingInner(0.2)
-    .paddingOuter(0.5);
+var x = d3.scaleTime() //d3.scaleBand()
+    // .paddingInner(0.2)
+    // .paddingOuter(0.5);
 
 var y = d3.scaleLinear()
     .domain([0,1]);
 
 var PCTFORMAT = d3.format(".0%");
 var num_ticks = 10;
+var parseTime = d3.timeParse('%m/%d/%y');
 
 var selected_indicator = "food_insufficient";
 var selected_geo = "US";
@@ -82,6 +85,8 @@ function drawGraphic(containerWidth) {
     height = (containerWidth < 450) ? (width * 0.66) - margin.top - margin.bottom : 230;
     num_ticks = (containerWidth < 400) ? 5 : 10;
 
+    myBandwidth = width / numWeeks
+
     x.rangeRound([0, width]);
     y.rangeRound([height, 0]);
 
@@ -128,12 +133,17 @@ d3.csv("data/dummy.csv", function(d) {
     pulseData = data;
 
     var unique_weeks = d3.map(data, function(d) {return d.date_int;}).keys();
-    x.domain(unique_weeks);
+
+    var beginnings_of_weeks_ranges = unique_weeks.map(function(d){ return parseTime(d.split('–')[0]) });
+
+    x.domain( d3.extent(beginnings_of_weeks_ranges) )
+
+    numWeeks = beginnings_of_weeks_ranges.length;
+    // x.domain(unique_weeks);
 
     unique_weeks.forEach(function(w) {
         dummy_obs.date_int = w;
         dummy_state_data.push(dummy_obs);
-
     });
 
     pymChild = new pym.Child({renderCallback: drawGraphic });
@@ -184,7 +194,10 @@ function setupChart(race) {
     g.append("g")
         .attr("class", "axis x-axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickSizeOuter(0))
+        .call(d3.axisBottom(x)
+          // .tickSizeOuter(0)
+          .tickFormat( function(d){ debugger })//d3.timeFormat('%m/%d/%y'))
+        )
 
         g.select(".x-axis")
             .selectAll(".tick")
@@ -193,7 +206,12 @@ function setupChart(race) {
             });
 
     d3.selectAll(".x-axis .tick text")
-        .call(wrap, x.bandwidth());
+        // .call(wrap, myBandwidth )
+        .attr("transform", "translate(0,5)"); // move labels down to make space for longer ticks
+
+    d3.selectAll('.tick.t0 line').attr('y2', 8) // make major tick lines longer
+    d3.selectAll('.tick line').attr('y1', 1) // start minor ticks below x-axis to avoid overlap
+
 
     // rotate x-axis tick labels on small screens so they don't overlap
     if(width < 520) {
@@ -216,13 +234,13 @@ function setupChart(race) {
                 else return "race moe";
             }
         })
-        .attr("x", function(d) { return x(d.date_int); })
+        .attr("x", function(d) { return x(parseTime( d.date_int.split('–')[0] )) })
         .attr("y", function(d) {
             if(isNaN(d.moe_95_ub)) return y(0);
             else if(d.moe_95_ub > 1) return y(1);
             else return y(d.moe_95_ub);
          })
-        .attr("width", function(d) { return x.bandwidth(); })
+        .attr("width", function(d) { return myBandwidth ; })
         .attr("height", function(d) {
             if(isNaN(d.moe_95_ub)) return 0;
             else if(d.moe_95_lb < 0 && d.moe_95_ub <= 1) return y(0) - y(d.moe_95_ub);
@@ -263,7 +281,7 @@ function setupChart(race) {
                 else return "race dot";
             }
         })
-        .attr("cx", function(d) { return x(d.date_int) + x.bandwidth()*.5; })
+        .attr("cx", function(d) { return x(parseTime( d.date_int.split('–')[0] )) + myBandwidth *.5; })
         .attr("cy", function(d) { return y(+d.mean); })
         .attr("r", 4)
         .classed("insig", function(d) {
@@ -288,8 +306,8 @@ function setupChart(race) {
         });
 
     // add line demarcating where Phase 2 ends and Phase 3 begins
-    var padding_inner_amount = x("10/28/20–11/9/20") - (x("10/14/20–10/26/20") + x.bandwidth());
-    var phase2_end_pos = x("10/14/20–10/26/20") + x.bandwidth() + (padding_inner_amount / 2);
+    var padding_inner_amount = x("10/28/20–11/9/20") - (x("10/14/20–10/26/20") + myBandwidth );
+    var phase2_end_pos = x("10/14/20–10/26/20") + myBandwidth  + (padding_inner_amount / 2);
 
     var phase2_end_line = g.append("g")
         .attr("class", "phase_end_line");
@@ -373,12 +391,12 @@ function updateChart(race, metric, geo) {
                 else return "race moe";
             }
         })
-        .attr("x", function(d) { return x(d.date_int); })
+        .attr("x", function(d) { return x(parseTime( d.date_int.split('–')[0] )) })
         .attr("y", function(d) {
             if(isNaN(d.moe_95_ub)) return y(0);
             else if(d.moe_95_ub > 1) return y(1);
             else return y(d.moe_95_ub); })
-        .attr("width", function(d) { return x.bandwidth(); })
+        .attr("width", function(d) { return myBandwidth ; })
         .attr("height", function(d) {
             if(isNaN(d.moe_95_ub)) return 0;
             else if(d.moe_95_lb < 0 && d.moe_95_ub <= 1) return y(0) - y(d.moe_95_ub);
@@ -417,7 +435,7 @@ function updateChart(race, metric, geo) {
                 else return "race dot";
             }
         })
-        .attr("cx", function(d) { return x(d.date_int) + x.bandwidth()*.5; })
+        .attr("cx", function(d) { return x(parseTime( d.date_int.split('–')[0] )) + myBandwidth *.5; })
         .attr("cy", function(d) { return !isNaN(d.mean) ? y(+d.mean) : y(-1); })
         .classed("insig", function(d) {
             if(d.geography === "dummy data") return false;
