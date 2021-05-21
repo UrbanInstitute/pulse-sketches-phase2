@@ -352,13 +352,25 @@ select option[value=""] {
 .y-axis path.domain {
     stroke: none;
 }
+.x-axis > path.domain {
+  stroke: none;
+}
 
 .y-axis .tick line {
     stroke: #d2d2d2;
 }
 
+.y-axis > g:nth-child(2) > line {
+  stroke: #000000;
+}
+
 text {
     font-family: Lato;
+}
+
+text.question-note {
+  display: none;
+  font-style: italic;
 }
 
 .tick text {
@@ -375,7 +387,7 @@ text {
 }
 
 .tick.t1 text, .tick.t2 text{
-    /*display: none;*/
+    display: none;
 }
 
 .btn{
@@ -408,6 +420,46 @@ text {
 
 .phase_end {
     text-anchor: end;
+}
+
+/**************** MOUSEOVER STYLES **********************/
+
+.chart-tooltip {
+  background-color: #FFFFFF;
+  border: 1px solid #9D9D9D;
+  color: #9D9D9D;
+  font-size: 12px;
+  line-height: 1.1;
+  padding: 5px 10px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  width: 50px;
+}
+/*ever helpful: https://cssarrowplease.com/;*/
+
+.chart-tooltip:after, .chart-tooltip:before {
+bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.chart-tooltip:after {
+border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 5px;
+  margin-left: -5px;
+}
+.chart-tooltip:before {
+  border-color: rgba(210, 210, 210, 0);
+  border-bottom-color: #d2d2d2;
+  border-width: 6px;
+  margin-left: -6px;
 }
 
 
