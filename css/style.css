@@ -368,7 +368,7 @@ text {
     font-family: Lato;
 }
 
-text.question-note {
+.question-note {
   display: none;
   font-style: italic;
 }
@@ -523,7 +523,11 @@ svg.legend text {
 
 @media screen and (max-width: 781px) {
     svg.legend:first-of-type {
-        margin-bottom: 10%;
+        /*margin-bottom: 10%;*/
+    }
+
+    #msas-button {
+      width: 270px;
     }
 }
 

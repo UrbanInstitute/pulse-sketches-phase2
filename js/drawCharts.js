@@ -3,7 +3,7 @@ var pulseData;
 
 var margin = {
     top: 20,
-    right: 10,
+    right: 50,
     bottom: 60,
     left: 33
 };
@@ -107,6 +107,12 @@ function drawGraphic(containerWidth) {
 
     if (pymChild) {
         pymChild.sendHeight();
+    }
+
+    if (selected_indicator === 'inc_loss'){
+      d3.selectAll('.question-note').style('display', 'inline')
+    } else {
+      d3.selectAll('.question-note').style('display', 'none')
     }
 
 
@@ -371,6 +377,15 @@ function setupChart(race) {
         .attr("y2", height)
         .style("stroke-dasharray", "3 2");
 
+    phase3_end_line.append("rect")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", -20)
+        .attr("width", 100)
+        .attr("height", 50)
+        .attr("fill", "#FFFFFF")
+        .attr("opacity", 0.8)
+        .attr("class", 'question-note')
+
     phase3_end_line.append("text")
         .attr("class", "phase_begin ")
         .attr("x", phase3_end_pos + 5)
@@ -381,13 +396,13 @@ function setupChart(race) {
     phase3_end_line.append("text")
         .attr("class", "question-note")
         .attr("x", phase3_end_pos + 5)
-        .attr("y", 10)
+        .attr("y", 11)
         .text("Question wording")
 
     phase3_end_line.append("text")
         .attr("class", "question-note")
         .attr("x", phase3_end_pos + 5)
-        .attr("y", 22)
+        .attr("y", 25)
         .text("changed")
 
     phase3_end_line.append("text")
@@ -395,7 +410,7 @@ function setupChart(race) {
         .attr("x", phase3_end_pos - 5)
         .attr("y", 0)
         .attr("dy", "-0.5em")
-        .text("Phase 2 ends");
+        .text("Phase 3 ends");
 
 }
 
