@@ -397,7 +397,7 @@ function setupChart(race) {
         .attr("class", "question-note")
         .attr("x", phase3_end_pos + 5)
         .attr("y", 11)
-        .text("Question wording")
+        .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note")
