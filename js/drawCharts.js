@@ -76,6 +76,9 @@ $( function() {
     });
 });
 
+
+
+
 function drawGraphic(containerWidth) {
 
     if(containerWidth < 392) {
@@ -378,10 +381,10 @@ function setupChart(race) {
         .style("stroke-dasharray", "3 2");
 
     phase3_end_line.append("rect")
-        .attr("x", phase3_end_pos + 5)
-        .attr("y", -20)
-        .attr("width", 100)
-        .attr("height", 50)
+        .attr("x", phase3_end_pos + 1)
+        .attr("y", 24)
+        .attr("width", 70)
+        .attr("height", 35)
         .attr("fill", "#FFFFFF")
         .attr("opacity", 0.8)
         .attr("class", 'question-note')
@@ -396,13 +399,13 @@ function setupChart(race) {
     phase3_end_line.append("text")
         .attr("class", "question-note")
         .attr("x", phase3_end_pos + 5)
-        .attr("y", 11)
+        .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note")
         .attr("x", phase3_end_pos + 5)
-        .attr("y", 25)
+        .attr("y", 53)
         .text("changed")
 
     phase3_end_line.append("text")
@@ -430,6 +433,11 @@ function update() {
 
     if (metric === 'inc_loss'){
       d3.selectAll('.question-note').style('display', 'inline')
+
+      d3.select('.chart_title > span > span').on('click', function(){
+        pymChild.sendMessage('navigateTo', '.paragraphs-items-field-feature-footer');
+      })
+
     } else {
       d3.selectAll('.question-note').style('display', 'none')
     }
@@ -462,7 +470,7 @@ function updateChart(race, metric, geo) {
     }
 
     // update chart title
-    d3.select(".chart_title").text(chartTitles[metric]);
+    d3.select(".chart_title").html(chartTitles[metric]);
 
     // insert trend description
     d3.select(".trend_description").html(trendDescriptions[metric]);

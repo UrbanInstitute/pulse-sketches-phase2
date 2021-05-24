@@ -84,8 +84,20 @@ div.legend p {
 
 .chart_title {
     /*font-size: 18px;*/
-    line-height: 32px;
+    line-height: 24px;
     margin: 2.4rem 0 0.5rem;
+}
+
+.chart_title > span {
+  color: #757575;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.chart_title > span > span {
+  color: #1696d2;
+  cursor: pointer;
 }
 
 h4 {
@@ -370,7 +382,8 @@ text {
 
 .question-note {
   display: none;
-  font-style: italic;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .tick text {
