@@ -441,8 +441,8 @@ function update() {
     if (metric === 'inc_loss'){
       d3.selectAll('.question-note').style('display', 'inline')
       d3.select('.chart_title > span > span').on('click', function(){
-        // https://github.com/nprapps/pym.js/blob/57feb680ac3ff7aeef080e5efe0ddbe665530eac/src/pym.js#L970
-        pymChild.sendMessage('navigateTo', '.paragraphs-items-field-feature-footer');
+        var containerEnd = $('#chart_container').offset().top + $('#chart_container').outerHeight()
+        pymChild.scrollParentToChildPos(containerEnd)
       })
 
     } else {
