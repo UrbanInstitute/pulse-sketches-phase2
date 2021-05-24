@@ -184,7 +184,7 @@ function setupChart(race) {
     // console.log(data);
 
     // insert chart title
-    d3.select(".chart_title").text(chartTitles[selected_indicator]);
+    d3.select(".chart_title").html(chartTitles[selected_indicator]);
 
     // insert trend description
     d3.select(".trend_description").html(trendDescriptions[selected_indicator]);
