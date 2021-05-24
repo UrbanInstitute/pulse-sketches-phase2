@@ -429,25 +429,25 @@ function update() {
     else if(geo_level === "msa") geo = getGeography("msa");
     selected_geo = geo;
 
-    // add message about question wording change to inc_loss only
-
-    if (metric === 'inc_loss'){
-      d3.selectAll('.question-note').style('display', 'inline')
-
-      d3.select('.chart_title > span > span').on('click', function(){
-        pymChild.sendMessage('navigateTo', '.paragraphs-items-field-feature-footer');
-      })
-
-    } else {
-      d3.selectAll('.question-note').style('display', 'none')
-    }
-
     updateChart("national", metric, geo);
     updateChart("asian", metric, geo);
     updateChart("black", metric, geo);
     updateChart("hispanic", metric, geo);
     updateChart("other", metric, geo);
     updateChart("white", metric, geo);
+
+    // add message about question wording change to inc_loss only
+    // with click event that links to the 'about' section
+    if (metric === 'inc_loss'){
+      d3.selectAll('.question-note').style('display', 'inline')
+      d3.select('.chart_title > span > span').on('click', function(){
+        // https://github.com/nprapps/pym.js/blob/57feb680ac3ff7aeef080e5efe0ddbe665530eac/src/pym.js#L970
+        pymChild.sendMessage('navigateTo', '.paragraphs-items-field-feature-footer');
+      })
+
+    } else {
+      d3.selectAll('.question-note').style('display', 'none')
+    }
 
     pymChild.sendHeight();
 }
