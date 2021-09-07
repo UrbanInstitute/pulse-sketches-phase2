@@ -360,6 +360,9 @@ select option[value=""] {
 .insig{
     opacity: .25;
 }
+.hidden{
+    opacity: 0;
+}
 
 .y-axis path.domain {
     stroke: none;

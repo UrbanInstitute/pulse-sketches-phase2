@@ -113,7 +113,7 @@ function drawGraphic(containerWidth) {
     }
 
     if (selected_indicator === 'inc_loss' || selected_indicator == "expect_inc_loss" || selected_indicator == "depression_anxiety_signs"){
-      d3.selectAll('.question-note.' + metric).style('display', 'inline')
+      d3.selectAll('.question-note.' + selected_indicator).style('display', 'inline')
     }else {
       d3.selectAll('.question-note').style('display', 'none')
     }
@@ -521,8 +521,7 @@ function updateChart(race, metric, geo) {
     if(race === "national") {
         data = pulseData.filter(function(d) { return (d.geography === geo || d.geography === "US") &&
                                                         d.race_var === "total" &&
-                                                        d.metric === metric &&
-                                                        !d.var_removed })
+                                                        d.metric === metric })
         if(geo === "US") {
             data = data.concat(dummy_state_data);
         }
@@ -530,12 +529,11 @@ function updateChart(race, metric, geo) {
     else {
         data = pulseData.filter(function(d) { return d.geography === geo &&
                                                         (d.race_var === race || d.race_var === "total") &&
-                                                        d.metric === metric &&
-                                                        !d.var_removed })
+                                                        d.metric === metric })
     }
 
     data = data.filter(function(d){ return !d.var_removed })
-    console.log(race, metric, geo, data.filter(d => (d.week_num == "wk34")))
+    // console.log(race, metric, geo, data.filter(d => (d.week_num == "wk34")))
 
     // update chart title
     d3.select(".chart_title").html(chartTitles[metric]);
@@ -548,6 +546,7 @@ function updateChart(race, metric, geo) {
     // update margin of error bands
     svg.selectAll(".moe")
         .data(data)
+        // .style("opacity",1)
         .attr("class", function(d) {
             if((d.geo_type === "national") && (d.race_var === "total")) return "national moe";
             else {
@@ -568,6 +567,7 @@ function updateChart(race, metric, geo) {
             else if(d.moe_95_lb < 0 && d.moe_95_ub > 1) return y(0) - y(1);
             else return y(d.moe_95_lb) - y(d.moe_95_ub);
         })
+        .classed("hidden",false)
         .classed("insig", function(d) {
             if(d.geography === "dummy data") return false;
             else if(d.race_var !== "total") return (d.sigdiff === 0);
@@ -589,11 +589,12 @@ function updateChart(race, metric, geo) {
             }
         })
         .exit()
-        .style("opacity",0)
+        .classed("hidden",true)
 
     // update point estimate dots
     svg.selectAll(".dot")
         .data(data)
+        // .style("opacity",1)
         .attr("class", function (d) {
             if((d.geo_type === "national") && (d.race_var === "total")) return "national dot";
             else {
@@ -603,6 +604,7 @@ function updateChart(race, metric, geo) {
         })
         .attr("cx", function(d) { return x(d.date_int) + x.bandwidth() *.5; })
         .attr("cy", function(d) { return !isNaN(d.mean) ? y(+d.mean) : y(-1); })
+        .classed("hidden",false)
         .classed("insig", function(d) {
             if(d.geography === "dummy data") return false;
             else if(d.race_var !== "total") return (d.sigdiff === 0);
@@ -624,7 +626,7 @@ function updateChart(race, metric, geo) {
             }
         })
         .exit()
-        .style("opacity",0)
+        .classed("hidden",true)
 
 }
 
