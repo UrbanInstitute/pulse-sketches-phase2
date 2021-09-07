@@ -113,8 +113,11 @@ function drawGraphic(containerWidth) {
     }
 
     if (selected_indicator === 'inc_loss'){
-      d3.selectAll('.question-note').style('display', 'inline')
-    } else {
+      d3.selectAll('.question-note.inc_loss').style('display', 'inline')
+    }
+    else if(selected_indicator === 'expect_inc_loss'){
+      d3.selectAll('.question-note.expect_inc_loss').style('display', 'inline')
+    }else {
       d3.selectAll('.question-note').style('display', 'none')
     }
 
@@ -126,9 +129,9 @@ function drawGraphic(containerWidth) {
 // data can be found here: https://ui-census-pulse-survey.s3.amazonaws.com/phase2_all_to_current_week.csv
 // NOTE: if the en dashes in the date ranges aren't showing up properly,
 //       open the csv file in Sublime and go to File > Save with Encoding > UTF-8
-d3.csv("data/phase2_all_to_current_week_feature.csv", function(d) {
+d3.csv("data/phase2_all_to_current_week.csv", function(d) {
     return {
-        metric: d.metric,
+        metric: (d.metric == 'inc_loss_rv') ? 'inc_loss' : d.metric,
         race_var: d.race_var,
         week_num: d.week_num,
         geography: d.geography,
@@ -182,6 +185,7 @@ function setupChart(race) {
                                                         d.metric === selected_indicator; });
     }
     // console.log(data);
+    data = data.filter(function(d){ return !isNaN(d.mean) })
 
     // insert chart title
     d3.select(".chart_title").html(chartTitles[selected_indicator]);
@@ -387,7 +391,7 @@ function setupChart(race) {
         .attr("height", 35)
         .attr("fill", "#FFFFFF")
         .attr("opacity", 0.8)
-        .attr("class", 'question-note')
+        .attr("class", 'question-note inc_loss')
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin ")
@@ -397,13 +401,13 @@ function setupChart(race) {
         .text("Phase 3.1 begins");
 
     phase3_end_line.append("text")
-        .attr("class", "question-note")
+        .attr("class", "question-note inc_loss")
         .attr("x", phase3_end_pos + 5)
         .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
-        .attr("class", "question-note")
+        .attr("class", "question-note inc_loss")
         .attr("x", phase3_end_pos + 5)
         .attr("y", 53)
         .text("changed")
@@ -414,6 +418,55 @@ function setupChart(race) {
         .attr("y", 0)
         .attr("dy", "-0.5em")
         .text("Phase 3 ends");
+
+    // add line demarcating where Phase 3.1 ends and Phase 3.2 begins
+    var phase3_end_pos = x("6/23/21–7/5/21") + x.bandwidth();  + (padding_inner_amount / 2);
+
+    var phase3_end_line = g.append("g")
+        .attr("class", "phase_end_line phase3-2");
+
+    phase3_end_line.append("line")
+        .attr("x1", phase3_end_pos)
+        .attr("x2", phase3_end_pos)
+        .attr("y1", -margin.top)
+        .attr("y2", height)
+        .style("stroke-dasharray", "3 2");
+
+    phase3_end_line.append("rect")
+        .attr("x", phase3_end_pos + 1)
+        .attr("y", 24)
+        .attr("width", 70)
+        .attr("height", 35)
+        .attr("fill", "#FFFFFF")
+        .attr("opacity", 0.8)
+        .attr("class", 'question-note expect_inc_loss')
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_begin ")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 3.2 begins");
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 38)
+        .text("Question")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("removed")
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_end")
+        .attr("x", phase3_end_pos - 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 3.1 ends");
+
 
 }
 
@@ -438,13 +491,23 @@ function update() {
 
     // add message about question wording change to inc_loss only
     // with click event that links to the 'about' section
+
     if (metric === 'inc_loss'){
-      d3.selectAll('.question-note').style('display', 'inline')
+      d3.selectAll('.question-note.expect_inc_loss').style('display', 'none')
+      d3.selectAll('.question-note.inc_loss').style('display', 'inline')
       d3.select('.chart_title > span > span').on('click', function(){
         pymChild.scrollParentTo('about');
       })
 
-    } else {
+    }
+    else if(metric === 'expect_inc_loss'){
+      d3.selectAll('.question-note.inc_loss').style('display', 'none')
+      d3.selectAll('.question-note.expect_inc_loss').style('display', 'inline')
+      d3.select('.chart_title > span > span').on('click', function(){
+        pymChild.scrollParentTo('about');
+      }) 
+
+    }else {
       d3.selectAll('.question-note').style('display', 'none')
     }
 
