@@ -130,8 +130,12 @@ function drawGraphic(containerWidth) {
 // NOTE: if the en dashes in the date ranges aren't showing up properly,
 //       open the csv file in Sublime and go to File > Save with Encoding > UTF-8
 d3.csv("data/phase2_all_to_current_week.csv", function(d) {
+    // var metric;
+    // if(+d.var_removed == 1){
+    //     console.log(d)
+    // }
     return {
-        metric: (d.metric == 'inc_loss_rv') ? 'inc_loss' : d.metric,
+        metric: (d.metric == "inc_loss_rv") ? "inc_loss" : d.metric,
         race_var: d.race_var,
         week_num: d.week_num,
         geography: d.geography,
@@ -143,11 +147,13 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
         moe_95_ub: +d.moe_95_ub,
         sigdiff: +d.sigdiff,
         date_int: d.date_int,
+        var_removed: (+d.var_removed == 1)
     };
 }, function(error, data) {
 
     data = data.filter(function(d){
-      return d.date_int !== 'NA' //Alena marked variables removed from 3.1 as 'NA'
+      return d.date_int !== 'NA' &&//Alena marked variables removed from 3.1 as 'NA'
+      !d.var_removed
     })
 
     pulseData = data;
@@ -185,7 +191,7 @@ function setupChart(race) {
                                                         d.metric === selected_indicator; });
     }
     // console.log(data);
-    data = data.filter(function(d){ return !isNaN(d.mean) })
+    data = data.filter(function(d){ return !d.var_removed })
 
     // insert chart title
     d3.select(".chart_title").html(chartTitles[selected_indicator]);
@@ -520,7 +526,8 @@ function updateChart(race, metric, geo) {
     if(race === "national") {
         data = pulseData.filter(function(d) { return (d.geography === geo || d.geography === "US") &&
                                                         d.race_var === "total" &&
-                                                        d.metric === metric; });
+                                                        d.metric === metric &&
+                                                        !d.var_removed })
         if(geo === "US") {
             data = data.concat(dummy_state_data);
         }
@@ -528,8 +535,13 @@ function updateChart(race, metric, geo) {
     else {
         data = pulseData.filter(function(d) { return d.geography === geo &&
                                                         (d.race_var === race || d.race_var === "total") &&
-                                                        d.metric === metric; });
+                                                        d.metric === metric &&
+                                                        !d.var_removed })
     }
+
+    // console.log(race, metric, geo, data)
+    data = data.filter(function(d){ return !d.var_removed })
+    console.log(race, metric, geo, data.filter(d => (d.week_num == "wk34")))
 
     // update chart title
     d3.select(".chart_title").html(chartTitles[metric]);
@@ -581,7 +593,9 @@ function updateChart(race, metric, geo) {
                 var corresponding_race_data = data.filter(function(x) { return (x.date_int === d.date_int) && (x.race_var !== "total"); });
                 return corresponding_race_data[0].sigdiff === 0;
             }
-        });
+        })
+        .exit()
+        .style("opacity",0)
 
     // update point estimate dots
     svg.selectAll(".dot")
@@ -614,7 +628,10 @@ function updateChart(race, metric, geo) {
                 var corresponding_race_data = data.filter(function(x) { return (x.date_int === d.date_int) && (x.race_var !== "total"); });
                 return corresponding_race_data[0].sigdiff === 0;
             }
-        });
+        })
+        .exit()
+        .style("opacity",0)
+
 }
 
 function getMetric() {
