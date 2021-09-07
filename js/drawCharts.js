@@ -112,11 +112,8 @@ function drawGraphic(containerWidth) {
         pymChild.sendHeight();
     }
 
-    if (selected_indicator === 'inc_loss'){
-      d3.selectAll('.question-note.inc_loss').style('display', 'inline')
-    }
-    else if(selected_indicator === 'expect_inc_loss'){
-      d3.selectAll('.question-note.expect_inc_loss').style('display', 'inline')
+    if (selected_indicator === 'inc_loss' || selected_indicator == "expect_inc_loss" || selected_indicator == "depression_anxiety_signs"){
+      d3.selectAll('.question-note.' + metric).style('display', 'inline')
     }else {
       d3.selectAll('.question-note').style('display', 'none')
     }
@@ -445,7 +442,7 @@ function setupChart(race) {
         .attr("height", 35)
         .attr("fill", "#FFFFFF")
         .attr("opacity", 0.8)
-        .attr("class", 'question-note expect_inc_loss')
+        .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin ")
@@ -455,7 +452,7 @@ function setupChart(race) {
         .text("Phase 3.2 begins");
 
     phase3_end_line.append("text")
-        .attr("class", "question-note expect_inc_loss")
+        .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
         .attr("x", phase3_end_pos + 5)
         .attr("y", 38)
         .text("Question")
@@ -465,6 +462,12 @@ function setupChart(race) {
         .attr("x", phase3_end_pos + 5)
         .attr("y", 53)
         .text("removed")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note depression_anxiety_signs")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("changed")
 
     phase3_end_line.append("text")
         .attr("class", "phase_end")
@@ -498,22 +501,14 @@ function update() {
     // add message about question wording change to inc_loss only
     // with click event that links to the 'about' section
 
-    if (metric === 'inc_loss'){
-      d3.selectAll('.question-note.expect_inc_loss').style('display', 'none')
-      d3.selectAll('.question-note.inc_loss').style('display', 'inline')
+    if (metric === 'inc_loss' || metric === 'depression_anxiety_signs' || metric === 'expect_inc_loss'){
+      d3.selectAll('.question-note').style('display', 'none')
+      d3.selectAll('.question-note.' + metric).style('display', 'inline')
       d3.select('.chart_title > span > span').on('click', function(){
         pymChild.scrollParentTo('about');
       })
 
-    }
-    else if(metric === 'expect_inc_loss'){
-      d3.selectAll('.question-note.inc_loss').style('display', 'none')
-      d3.selectAll('.question-note.expect_inc_loss').style('display', 'inline')
-      d3.select('.chart_title > span > span').on('click', function(){
-        pymChild.scrollParentTo('about');
-      }) 
-
-    }else {
+    } else {
       d3.selectAll('.question-note').style('display', 'none')
     }
 
@@ -539,7 +534,6 @@ function updateChart(race, metric, geo) {
                                                         !d.var_removed })
     }
 
-    // console.log(race, metric, geo, data)
     data = data.filter(function(d){ return !d.var_removed })
     console.log(race, metric, geo, data.filter(d => (d.week_num == "wk34")))
 
