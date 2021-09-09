@@ -1,10 +1,10 @@
 var chartTitles = {
     classes_cancelled: "Share of adults in households with children enrolled in public or private school where at least one child had class cancelled because of COVID-19",
-    inc_loss: "Share of adults in households where at least one person has lost employment income since March 13, 2020 (phases 2 and 3) or in the last four weeks (phase 3.1)*<br><span>*For more details, see the <span>About the Data</span> section</span>",
-    expect_inc_loss: "Share of adults in households where at least one person expects to lose employment income in the next four weeks",
+    inc_loss: "Share of adults in households where at least one person has lost employment income since March 13, 2020 (phases 2 and 3) or in the last four weeks (phases 3.1 and 3.2)*<br><span>*For more details, see the <span>About the Data</span> section</span>",
+    expect_inc_loss: "Share of adults in households where at least one person expects to lose employment income in the next four weeks (question removed in phase 3.2)*<br><span>*For more details, see the <span>About the Data</span> section</span>",
     food_insufficient: "Share of adults in households where there was often or sometimes not enough food in the past week",
     uninsured: "Share of adults under 65 that are uninsured",
-    depression_anxiety_signs: "Share of adults that experienced symptoms of depression or anxiety disorders in the past week",
+    depression_anxiety_signs: "Share of adults that experienced symptoms of depression or anxiety disorders in the past week (phases 2, 3, and 3.1) or in the last two weeks (phase 3.2)*<br><span>*For more details, see the <span>About the Data</span> section</span>",
     mortgage_not_conf: "Share of adults in households that have no or slight confidence they can pay their mortgage next month or have deferred payment",
     insured_public: "Share of adults under 65 that have public health insurance",
     rent_not_conf: "Share of adults in households that have no or slight confidence they can pay their rent next month or have deferred payment",
