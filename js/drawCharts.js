@@ -476,6 +476,62 @@ function setupChart(race) {
         .attr("dy", "-0.5em")
         .text("Phase 3.1 ends");
 
+    // add line demarcating where Phase 3.2 ends and Phase 3.3 begins
+    var phase3_end_pos = x("9/29/21–10/11/21") + x.bandwidth();  + (padding_inner_amount / 2);
+
+    var phase3_end_line = g.append("g")
+        .attr("class", "phase_end_line phase3-3");
+
+    phase3_end_line.append("line")
+        .attr("x1", phase3_end_pos)
+        .attr("x2", phase3_end_pos)
+        .attr("y1", -margin.top)
+        .attr("y2", height)
+        .style("stroke-dasharray", "3 2");
+
+    phase3_end_line.append("rect")
+        .attr("x", phase3_end_pos + 1)
+        .attr("y", 24)
+        .attr("width", 70)
+        .attr("height", 35)
+        .attr("fill", "#FFFFFF")
+        .attr("opacity", 0.8)
+        .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_begin ")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 3.3 begins");
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 38)
+        .text("Question")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("removed")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note depression_anxiety_signs")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("changed")
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_end")
+        .attr("x", phase3_end_pos - 5)
+        .attr("y", 0)
+        .attr("dy", "-0.5em")
+        .text("Phase 3.2 ends");
+
+
+
 
 }
 
