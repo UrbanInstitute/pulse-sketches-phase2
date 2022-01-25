@@ -156,10 +156,44 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
     pulseData = data;
 
     var unique_weeks = d3.map(data, function(d) { return d.date_int;}).keys();
+    // unique_weeks.push("asdf")
+    var all_weeks = [];
+    for(var i = 0; i < unique_weeks.length; i++){
+        if(i == unique_weeks.length - 1) all_weeks.push(unique_weeks[i])
+        else{
+            var dateRangeA = unique_weeks[i],
+                startDateA = moment(dateRangeA.split("–")[0]),
+                endDateA = moment(dateRangeA.split("–")[1]),
+                dateRangeB = unique_weeks[i+1],
+                startDateB = moment(dateRangeB.split("–")[0]),
+                endDateB = moment(dateRangeB.split("–")[1]),
+                dateDiff = startDateB.diff(startDateA,"days")
 
-    x.domain( unique_weeks )
+                if(dateDiff == 14){
+                    all_weeks.push(dateRangeA)
+                }
+                else if(dateDiff == 28){
+                    all_weeks.push(dateRangeA)
+                    var startDateC = moment(endDateA);
+                    startDateC.add("2", "days")
+                    var endDateC = moment(startDateC)
+                    endDateC.add("12", "days")
+                    var dateRangeC = startDateC.format("M/D/YY") + "–" + endDateC.format("M/D/YY")
+                    // var dateRangeA
 
-    unique_weeks.forEach(function(w) {
+                    all_weeks.push(dateRangeC)
+                }else{
+                    all_weeks.push(dateRangeA)
+                    all_weeks.push("GAP1")
+                    all_weeks.push("GAP2")
+                }
+        }
+    }
+
+    x.domain( all_weeks )
+    console.log(all_weeks)
+
+    all_weeks.forEach(function(w) {
         dummy_obs.date_int = w;
         dummy_state_data.push(dummy_obs);
     });
@@ -216,7 +250,12 @@ function setupChart(race) {
         g.select(".x-axis")
             .selectAll(".tick")
             .attr("class", function(d,i){
-                return "tick t" + (i%3)
+                // console.log(d,i)
+                if(i > 30) return "tick t" + (i-2%3)
+                else return "tick t" + (i%3)
+            })
+            .style("display", function(d,i){
+                return d.search("GAP") == -1 ? "block" : "none"
             });
 
     d3.selectAll(".x-axis .tick text")
@@ -247,6 +286,7 @@ function setupChart(race) {
         div.transition()
           .style('opacity', 0)
       })
+
 
       g.append("g")
           .attr("class", "axis y-axis")
@@ -529,6 +569,23 @@ function setupChart(race) {
         .attr("y", 0)
         .attr("dy", "-0.5em")
         .text("Phase 3.2 ends");
+
+    g.append("rect")
+        .attr("x", x("9/29/21–10/11/21") + x.bandwidth())
+        .attr("y", height)
+        .attr("width", 3*x.bandwidth())
+        .attr("height", 10)
+        .style("fill", "white")
+
+    g.append("line")
+        .attr("x1", x("9/29/21–10/11/21") + x.bandwidth())
+        .attr("x2", x("9/29/21–10/11/21") + 4*x.bandwidth())
+        .attr("y1", height+.5)
+        .attr("y2", height+.5)
+        .style("fill", "none")
+        .style("stroke","#696969")
+        .style("stroke-width",1.5)
+        .style("stroke-dasharray", "5 5");
 
 
 
