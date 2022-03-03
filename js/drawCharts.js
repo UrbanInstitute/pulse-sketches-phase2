@@ -401,16 +401,14 @@ function setupChart(race) {
 
     phase2_end_line.append("text")
         .attr("class", "phase_begin")
-        .attr("x", phase2_end_pos + 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase2_end_pos + 5) + "px, -16px) rotate(90deg)")
+        .style("text-anchor","start")
         .text("Phase 3 begins");
 
     phase2_end_line.append("text")
         .attr("class", "phase_end")
-        .attr("x", phase2_end_pos - 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase2_end_pos - 5) + "px, -16px) rotate(-90deg)")
+        .style("text-anchor","end")
         .text("Phase 2 ends");
 
 
@@ -438,9 +436,8 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin ")
-        .attr("x", phase3_end_pos + 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase3_end_pos + 5) + "px, -16px) rotate(90deg)")
+        .style("text-anchor","start")
         .text("Phase 3.1 begins");
 
     phase3_end_line.append("text")
@@ -457,9 +454,8 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "phase_end")
-        .attr("x", phase3_end_pos - 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase3_end_pos - 5) + "px, -16px) rotate(-90deg)")
+        .style("text-anchor","end")
         .text("Phase 3 ends");
 
     // add line demarcating where Phase 3.1 ends and Phase 3.2 begins
@@ -486,9 +482,8 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin ")
-        .attr("x", phase3_end_pos + 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase3_end_pos + 5) + "px, -16px) rotate(90deg)")
+        .style("text-anchor","start")
         .text("Phase 3.2 begins");
 
     phase3_end_line.append("text")
@@ -511,9 +506,8 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "phase_end")
-        .attr("x", phase3_end_pos - 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase3_end_pos - 5) + "px, -16px) rotate(-90deg)")
+        .style("text-anchor","end")
         .text("Phase 3.1 ends");
 
     // add line demarcating where Phase 3.2 ends and Phase 3.3 begins
@@ -539,10 +533,9 @@ function setupChart(race) {
         .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
 
     phase3_end_line.append("text")
-        .attr("class", "phase_begin ")
-        .attr("x", phase3_end_pos + 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .attr("class", "phase_begin")
+        .style("transform","translate(" + (phase3_end_pos + 5) + "px, -16px) rotate(90deg)")
+        .style("text-anchor","start")
         .text("Phase 3.3 begins");
 
     phase3_end_line.append("text")
@@ -565,9 +558,8 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "phase_end")
-        .attr("x", phase3_end_pos - 5)
-        .attr("y", 0)
-        .attr("dy", "-0.5em")
+        .style("transform","translate(" + (phase3_end_pos - 5) + "px, -16px) rotate(-90deg)")
+        .style("text-anchor","end")
         .text("Phase 3.2 ends");
 
     g.append("rect")
