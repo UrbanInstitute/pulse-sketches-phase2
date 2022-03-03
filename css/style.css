@@ -405,6 +405,9 @@ text {
 .tick.t1 text, .tick.t2 text{
     display: none;
 }
+.tick.t31 text, .tick.t32 text, .tick.t34 text{
+    display: none;
+}
 
 .btn{
     display: inline-block;
