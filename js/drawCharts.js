@@ -186,7 +186,7 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
                 }else{
                     all_weeks.push(dateRangeA)
                     all_weeks.push("GAP" + gapInt)
-                    all_weeks.push("GAP" + (gapInt+1))
+                    if(gapInt == 1) all_weeks.push("GAP" + (gapInt+1))
                     gapInt+=2;
                 }
         }
@@ -444,13 +444,13 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "question-note inc_loss")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note inc_loss")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("changed")
 
@@ -490,19 +490,19 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("removed")
 
     phase3_end_line.append("text")
         .attr("class", "question-note depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("changed")
 
@@ -542,19 +542,19 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("removed")
 
     phase3_end_line.append("text")
         .attr("class", "question-note depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("changed")
 
@@ -595,19 +595,19 @@ function setupChart(race) {
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
 
     phase3_end_line.append("text")
         .attr("class", "question-note expect_inc_loss")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("removed")
 
     phase3_end_line.append("text")
         .attr("class", "question-note depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 5)
+        .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("changed")
 
@@ -639,20 +639,20 @@ function setupChart(race) {
     g.append("rect")
         .attr("x", x("1/26/22–2/7/22") + x.bandwidth())
         .attr("y", height)
-        .attr("width", 3*x.bandwidth())
+        .attr("width", 2*x.bandwidth())
         .attr("height", 10)
         .style("fill", "white")
 
     g.append("line")
         .attr("x1", x("1/26/22–2/7/22") + x.bandwidth())
-        .attr("x2", x("1/26/22–2/7/22") + 4*x.bandwidth())
+        .attr("x2", x("1/26/22–2/7/22") + 3*x.bandwidth())
         .attr("y1", height+.5)
         .attr("y2", height+.5)
         .style("fill", "none")
         .style("stroke","#696969")
         .style("stroke-width",1.5)
         .style("stroke-dasharray", "5 5");
-        
+
 
 
 
