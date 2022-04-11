@@ -158,6 +158,7 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
     var unique_weeks = d3.map(data, function(d) { return d.date_int;}).keys();
     // unique_weeks.push("asdf")
     var all_weeks = [];
+    var gapInt = 1;
     for(var i = 0; i < unique_weeks.length; i++){
         if(i == unique_weeks.length - 1) all_weeks.push(unique_weeks[i])
         else{
@@ -184,8 +185,9 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
                     all_weeks.push(dateRangeC)
                 }else{
                     all_weeks.push(dateRangeA)
-                    all_weeks.push("GAP1")
-                    all_weeks.push("GAP2")
+                    all_weeks.push("GAP" + gapInt)
+                    all_weeks.push("GAP" + (gapInt+1))
+                    gapInt+=2;
                 }
         }
     }
@@ -562,6 +564,61 @@ function setupChart(race) {
         .style("text-anchor","end")
         .text("Phase 3.2 ends");
 
+
+    // add line demarcating where Phase 3.3 ends and Phase 3.4 begins
+    var phase3_end_pos = x("1/26/22–2/7/22") + x.bandwidth();  + (padding_inner_amount / 2);
+
+    var phase3_end_line = g.append("g")
+        .attr("class", "phase_end_line phase3-4");
+
+    phase3_end_line.append("line")
+        .attr("x1", phase3_end_pos)
+        .attr("x2", phase3_end_pos)
+        .attr("y1", -margin.top)
+        .attr("y2", height)
+        .style("stroke-dasharray", "3 2");
+
+    phase3_end_line.append("rect")
+        .attr("x", phase3_end_pos + 1)
+        .attr("y", 24)
+        .attr("width", 70)
+        .attr("height", 35)
+        .attr("fill", "#FFFFFF")
+        .attr("opacity", 0.8)
+        .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_begin")
+        .style("transform","translate(" + (phase3_end_pos + 5) + "px, -16px) rotate(90deg)")
+        .style("text-anchor","start")
+        .text("Phase 3.4 begins");
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 38)
+        .text("Question")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note expect_inc_loss")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("removed")
+
+    phase3_end_line.append("text")
+        .attr("class", "question-note depression_anxiety_signs")
+        .attr("x", phase3_end_pos + 5)
+        .attr("y", 53)
+        .text("changed")
+
+    phase3_end_line.append("text")
+        .attr("class", "phase_end")
+        .style("transform","translate(" + (phase3_end_pos - 5) + "px, -16px) rotate(-90deg)")
+        .style("text-anchor","end")
+        .text("Phase 3.3 ends");
+
+
+
     g.append("rect")
         .attr("x", x("9/29/21–10/11/21") + x.bandwidth())
         .attr("y", height)
@@ -578,6 +635,24 @@ function setupChart(race) {
         .style("stroke","#696969")
         .style("stroke-width",1.5)
         .style("stroke-dasharray", "5 5");
+
+    g.append("rect")
+        .attr("x", x("1/26/22–2/7/22") + x.bandwidth())
+        .attr("y", height)
+        .attr("width", 3*x.bandwidth())
+        .attr("height", 10)
+        .style("fill", "white")
+
+    g.append("line")
+        .attr("x1", x("1/26/22–2/7/22") + x.bandwidth())
+        .attr("x2", x("1/26/22–2/7/22") + 4*x.bandwidth())
+        .attr("y1", height+.5)
+        .attr("y2", height+.5)
+        .style("fill", "none")
+        .style("stroke","#696969")
+        .style("stroke-width",1.5)
+        .style("stroke-dasharray", "5 5");
+        
 
 
 
