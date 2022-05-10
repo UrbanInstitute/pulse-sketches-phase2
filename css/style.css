@@ -393,19 +393,22 @@ text {
     font-size: 12px;
 }
 
-.tick.t0 line, .tick.t30 line, .tick.t33 line, .tick.t37 line {
+.tick.t0 line, .tick.t30 line, .tick.t33 line, .tick.t36 line {
   stroke: #000000;
   stroke-width: 2px;
 }
+.tick.t36 line {
+    stroke-width: 6px;
+}
 
-.tick.t1 line, .tick.t2 line {
+.tick.t1 line, .tick.t2 line, .tick.t37 line,.tick.t38 line {
   stroke: #9D9D9D;
 }
 
 .tick.t1 text, .tick.t2 text{
     display: none;
 }
-.tick.t31 text, .tick.t32 text, .tick.t34 text{
+.tick.t31 text, .tick.t32 text, .tick.t34 text, .tick.t37 text,.tick.t38 text{
     display: none;
 }
 
