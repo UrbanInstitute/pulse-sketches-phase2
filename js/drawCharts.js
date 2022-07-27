@@ -112,7 +112,7 @@ function drawGraphic(containerWidth) {
         pymChild.sendHeight();
     }
 
-    if (selected_indicator === 'inc_loss' || selected_indicator == "expect_inc_loss" || selected_indicator == "depression_anxiety_signs"){
+    if (selected_indicator === 'inc_loss' || selected_indicator == "expect_inc_loss" || selected_indicator == "depression_anxiety_signs" || selected_indicator == "rent_not_conf" || selected_indicator == "mortgage_not_conf"){
       d3.selectAll('.question-note.' + selected_indicator).style('display', 'inline')
     }else {
       d3.selectAll('.question-note').style('display', 'none')
@@ -127,10 +127,6 @@ function drawGraphic(containerWidth) {
 // NOTE: if the en dashes in the date ranges aren't showing up properly,
 //       open the csv file in Sublime and go to File > Save with Encoding > UTF-8
 d3.csv("data/phase2_all_to_current_week.csv", function(d) {
-    // var metric;
-    // if(+d.var_removed == 1){
-    //     console.log(d)
-    // }
     return {
         metric: (d.metric == "inc_loss_rv") ? "inc_loss" : d.metric,
         race_var: d.race_var,
@@ -156,7 +152,6 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
     pulseData = data;
 
     var unique_weeks = d3.map(data, function(d) { return d.date_int;}).keys();
-    // unique_weeks.push("asdf")
     var all_weeks = [];
     var gapInt = 1;
     for(var i = 0; i < unique_weeks.length; i++){
@@ -193,7 +188,6 @@ d3.csv("data/phase2_all_to_current_week.csv", function(d) {
     }
 
     x.domain( all_weeks )
-    console.log(all_weeks)
 
     all_weeks.forEach(function(w) {
         dummy_obs.date_int = w;
@@ -223,7 +217,6 @@ function setupChart(race) {
                                                         (d.race_var === race || d.race_var === "total") &&
                                                         d.metric === selected_indicator; });
     }
-    // console.log(data);
     data = data.filter(function(d){ return !d.var_removed })
 
     // insert chart title
@@ -532,7 +525,7 @@ function setupChart(race) {
         .attr("height", 35)
         .attr("fill", "#FFFFFF")
         .attr("opacity", 0.8)
-        .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
+        .attr("class", 'question-note expect_inc_loss')
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin")
@@ -541,7 +534,7 @@ function setupChart(race) {
         .text("Phase 3.3 begins");
 
     phase3_end_line.append("text")
-        .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
+        .attr("class", "question-note expect_inc_loss")
         .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
@@ -551,12 +544,6 @@ function setupChart(race) {
         .attr("x", phase3_end_pos + 20)
         .attr("y", 53)
         .text("removed")
-
-    phase3_end_line.append("text")
-        .attr("class", "question-note depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 20)
-        .attr("y", 53)
-        .text("changed")
 
     phase3_end_line.append("text")
         .attr("class", "phase_end")
@@ -585,7 +572,7 @@ function setupChart(race) {
         .attr("height", 35)
         .attr("fill", "#FFFFFF")
         .attr("opacity", 0.8)
-        .attr("class", 'question-note expect_inc_loss depression_anxiety_signs')
+        .attr("class", 'question-note expect_inc_loss')
 
     phase3_end_line.append("text")
         .attr("class", "phase_begin")
@@ -594,7 +581,7 @@ function setupChart(race) {
         .text("Phase 3.4 begins");
 
     phase3_end_line.append("text")
-        .attr("class", "question-note expect_inc_loss depression_anxiety_signs")
+        .attr("class", "question-note expect_inc_loss")
         .attr("x", phase3_end_pos + 20)
         .attr("y", 38)
         .text("Question")
@@ -606,17 +593,10 @@ function setupChart(race) {
         .text("removed")
 
     phase3_end_line.append("text")
-        .attr("class", "question-note depression_anxiety_signs")
-        .attr("x", phase3_end_pos + 20)
-        .attr("y", 53)
-        .text("changed")
-
-    phase3_end_line.append("text")
         .attr("class", "phase_end")
         .style("transform","translate(" + (phase3_end_pos - 5) + "px, -16px) rotate(-90deg)")
         .style("text-anchor","end")
         .text("Phase 3.3 ends");
-
 
 
     g.append("rect")
@@ -653,9 +633,87 @@ function setupChart(race) {
         .style("stroke-width",1.5)
         .style("stroke-dasharray", "5 5");
 
+        // add line demarcating where Phase 3.4 ends and Phase 3.5 begins
+        var phase3_5_end_pos = x("4/27/22–5/9/22") + x.bandwidth();  + (padding_inner_amount / 2);
 
+        var phase3_5_end_line = g.append("g")
+            .attr("class", "phase_end_line phase4-5");
 
+        phase3_5_end_line.append("line")
+            .attr("x1", phase3_5_end_pos)
+            .attr("x2", phase3_5_end_pos)
+            .attr("y1", -margin.top)
+            .attr("y2", height)
+            .style("stroke-dasharray", "3 2");
 
+        phase3_5_end_line.append("rect")
+            .attr("x", phase3_5_end_pos + 1)
+            .attr("y", 24)
+            .attr("width", 70)
+            .attr("height", 35)
+            .attr("fill", "#FFFFFF")
+            .attr("opacity", 0.8)
+            .attr("class", 'question-note expect_inc_loss mortgage_not_conf rent_not_conf')
+
+        phase3_5_end_line.append("text")
+            .attr("class", "phase_begin")
+            .style("transform","translate(" + (phase3_5_end_pos + 5) + "px, -16px) rotate(90deg)")
+            .style("text-anchor","start")
+            .text("Phase 3.5 begins");
+
+        phase3_5_end_line.append("text")
+            .attr("class", "question-note expect_inc_loss mortgage_not_conf rent_not_conf")
+            .attr("x", phase3_5_end_pos + 20)
+            .attr("y", 38)
+            .text("Question")
+
+        phase3_5_end_line.append("text")
+            .attr("class", "question-note expect_inc_loss mortgage_not_conf  rent_not_conf")
+            .attr("x", phase3_5_end_pos + 20)
+            .attr("y", 53)
+            .text("removed")
+
+        phase3_5_end_line.append("text")
+            .attr("class", "phase_end")
+            .style("transform","translate(" + (phase3_5_end_pos - 5) + "px, -16px) rotate(-90deg)")
+            .style("text-anchor","end")
+            .text("Phase 3.4 ends");
+
+        g.append("rect")
+            .attr("x", x("4/27/22–5/9/22") + x.bandwidth())
+            .attr("y", height)
+            .attr("width", 2*x.bandwidth())
+            .attr("height", 10)
+            .style("fill", "white")
+
+        // g.append("line")
+        //     .attr("x1", x("4/27/22–5/9/22") + x.bandwidth())
+        //     .attr("x2", x("4/27/22–5/9/22") + 4*x.bandwidth())
+        //     .attr("y1", height+.5)
+        //     .attr("y2", height+.5)
+        //     .style("fill", "none")
+        //     .style("stroke","#696969")
+        //     .style("stroke-width",1.5)
+        //     .style("stroke-dasharray", "5 5");
+
+        g.append("rect")
+            .attr("x", x("4/27/22–5/9/22") + x.bandwidth())
+            .attr("y", height)
+            .attr("width", x.bandwidth())
+            .attr("height", 10)
+            .style("fill", "white")
+
+        g.append("line")
+            .attr("x1", x("4/27/22–5/9/22") + x.bandwidth())
+            .attr("x2", x("4/27/22–5/9/22") + 3*x.bandwidth())
+            .attr("y1", height+.5)
+            .attr("y2", height+.5)
+            .style("fill", "none")
+            .style("stroke","#696969")
+            .style("stroke-width",1.5)
+            .style("stroke-dasharray", "5 5");
+
+            // UPDATE: Any new phase of the survey will require a new dotted line and the Phase 3.X ends Phase 3.X begins. Last update in July 27 was 3.4 to 3.5, continue here. The process is 'manual', just copy the previous break and paste.
 
 }
 
@@ -681,7 +739,7 @@ function update() {
     // add message about question wording change to inc_loss only
     // with click event that links to the 'about' section
 
-    if (metric === 'inc_loss' || metric === 'depression_anxiety_signs' || metric === 'expect_inc_loss'){
+    if (metric === 'inc_loss' || metric === 'depression_anxiety_signs' || metric === 'expect_inc_loss' || metric == "rent_not_conf" || metric == "mortgage_not_conf"){
       d3.selectAll('.question-note').style('display', 'none')
       d3.selectAll('.question-note.' + metric).style('display', 'inline')
       d3.select('.chart_title > span > span').on('click', function(){
@@ -713,7 +771,6 @@ function updateChart(race, metric, geo) {
     }
 
     data = data.filter(function(d){ return !d.var_removed })
-    // console.log(race, metric, geo, data.filter(d => (d.week_num == "wk34")))
 
     // update chart title
     d3.select(".chart_title").html(chartTitles[metric]);
@@ -868,4 +925,3 @@ d3.selection.prototype.moveToFront = function() {
     this.parentNode.appendChild(this);
   });
 };
-
