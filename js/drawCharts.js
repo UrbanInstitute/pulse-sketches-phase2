@@ -261,7 +261,7 @@ function setupChart(race) {
     d3.selectAll('.tick line').attr('y1', 1) // start minor ticks below x-axis to avoid overlap
 
     //add mouseover to minor tick marks
-    d3.selectAll('.tick.t1, .tick.t2')
+    d3.selectAll('.tick')
       .append('rect')
       .attr('width', x.bandwidth())
       .attr('height', 20)
